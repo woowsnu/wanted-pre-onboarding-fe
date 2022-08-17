@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupAPI } from "../apis/auth";
+import { signupAPI } from "../../apis/auth";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -32,7 +32,11 @@ const Signup = () => {
     console.log(isEmailValid);
   };
   const passwordInputHandler = (e) => {
-    setPassword(e.target.value);
+    const enteredPassword = e.target.value;
+    setPassword(enteredPassword);
+    if (enteredPassword.length > 7 && enteredPassword.trim() !== "") {
+      setPasswordValid(true);
+    }
     checkPasswordValid(isPasswordValid);
   };
 
@@ -44,11 +48,15 @@ const Signup = () => {
       password,
     };
 
-    await signupAPI(user).then((response) => {
-      if (response.ok) {
-        alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
-      }
-    });
+    await signupAPI(user)
+      .then((response) => {
+        if (response.ok) {
+          alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("회원가입 실패:", error);
+      });
     await navigate("/");
   };
 

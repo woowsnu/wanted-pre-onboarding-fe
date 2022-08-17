@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginAPI } from "../apis/auth";
+import { loginAPI } from "../../apis/auth";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -27,13 +27,18 @@ const Login = () => {
       password,
     };
 
-    loginAPI(user).then(async (response) => {
-      if (response.ok) {
-        const res = await response.json();
-        localStorage.setItem("access_token", res.access_token);
-      }
-    });
-    navigate("/todo");
+    loginAPI(user)
+      .then(async (response) => {
+        if (response.ok) {
+          const res = await response.json();
+          localStorage.setItem("access_token", res.access_token);
+          navigate("/todo", { replace: true });
+        }
+      })
+      .catch((error) => {
+        console.error("로그인 실패", error);
+      });
+    setEmail("");
   };
 
   return (
@@ -69,7 +74,10 @@ const Login = () => {
           <Caption>
             <span className="text">계정이 없으신가요?</span>
             <span className="text">
-              <Link to="/signup" style={{ textDecoration: "none", color: "blue" }}>
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "blue" }}
+              >
                 회원가입
               </Link>
             </span>

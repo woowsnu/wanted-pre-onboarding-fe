@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createTodoAPI } from "../apis/todo";
+import { createTodoAPI } from "../../apis/todo";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -12,18 +12,18 @@ const AddTodo = (props) => {
     setTodo(e.target.value);
   };
 
-  const addTodo = async () => {
+  const addTodo = () => {
     const data = {
       todo,
     };
-    await createTodoAPI(data).then((response) => {
+    createTodoAPI(data).then((response) => {
       if(response.ok) {
-        console.log(response)
         props.renderTodos();
       }
-    });
+    }).catch(error=>{console.error(error)});    
     setTodo("");
   };
+
 
   return (
     <Container>
@@ -34,7 +34,7 @@ const AddTodo = (props) => {
         variant="standard"
         placeholder=" 할 일을 입력하세요."
       />
-      <IconButton onClick={addTodo}>
+      <IconButton onClick={addTodo} color="primary" >
         <AddCircleIcon />
       </IconButton>
     </Container>

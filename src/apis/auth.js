@@ -1,7 +1,6 @@
 import baseURL from ".";
-
 // 회원가입 API
-export const signupAPI = (user) =>
+export const signupAPI = async (user) => 
   fetch(`${baseURL}/auth/signup`, {
     method: "POST",
     headers: {

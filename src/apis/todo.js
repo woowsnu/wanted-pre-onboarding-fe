@@ -14,7 +14,7 @@ export const createTodoAPI = (todo) =>
   });
 
 // 전체 리스트 조회 API
-export const getAllTodoAPI = () =>
+export const getAllTodoAPI = async () =>
   fetch(`${baseURL}/todos`, {
     headers: {
       "Authorization": 'Bearer ' + token,

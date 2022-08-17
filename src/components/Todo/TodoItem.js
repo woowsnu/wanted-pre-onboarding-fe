@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateTodoAPI, deleteTodoAPI } from "../apis/todo";
+import { updateTodoAPI, deleteTodoAPI } from "../../apis/todo";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
@@ -11,51 +11,69 @@ import styled from "styled-components";
 
 const TodoItem = (props) => {
   const [todo, setTodo] = useState(props.todo);
+  const [editedTodo, setEditedTodo] = useState(props.todo);
   const [isCompleted, setIsCompleted] = useState(props.isCompleted);
   const [editMode, setEditMode] = useState(false);
 
-  const isComplatedHandler = () => {
-    setIsCompleted(!isCompleted);
+  const todoChangeHandler = (e) => {
+    setEditedTodo(e.target.value);
   };
 
-  const todoChangeHandler = (e) => {
-    setTodo(e.target.value);
-  };
+  const updateIsComplated = () => {
+    
+    const newTodo = {
+      todo: todo,
+      isCompleted: !isCompleted,
+    };
+    updateTodoAPI(newTodo, props.id).then((responese) => {
+      if (responese.ok) {
+        setIsCompleted(!isCompleted)
+      }
+    });
+  }    
+   
 
   const editModeHandler = () => {
     setEditMode(!editMode);
+    if (todo !== editedTodo) {
+      setEditedTodo(todo);
+    }
   };
 
-  const updateTodo = () => {
+  const updateTodoAndComplate = () => {
     const newTodo = {
-      todo,
-      isCompleted,
+      todo: editedTodo,
+      isCompleted
     };
     updateTodoAPI(newTodo, props.id).then((responese) => {
       if (responese.ok) {
         setEditMode(false);
+        setTodo(editedTodo);
       }
     });
   };
 
   const deleteTodo = () => {
-    deleteTodoAPI(props.id).then((response)=>{
-      if(response.ok) {
+    deleteTodoAPI(props.id).then((response) => {
+      if (response.ok) {
         props.renderTodos();
       }
-    })
+    });
   };
+
+  const doneTodo = isCompleted ? "doneTodo" : "todo";
 
   return (
     <Container>
       {!editMode ? (
         <Li>
           <Checkbox
+            checked={isCompleted}
             color="default"
-            onChange={isComplatedHandler}
+            onChange={updateIsComplated}
             value={isCompleted}
           />
-          <p className="todo">{todo}</p>
+          <p className={doneTodo}>{todo}</p>
           <div className="btns">
             <IconButton onClick={editModeHandler}>
               <EditRoundedIcon />
@@ -68,19 +86,18 @@ const TodoItem = (props) => {
       ) : (
         <Li>
           <Checkbox
+            checked={isCompleted}
             color="default"
-            onChange={isComplatedHandler}
-            value={isCompleted}
           />
           <TextField
             className="editTodo"
             fullWidth
-            value={todo}
+            value={editedTodo}
             onChange={todoChangeHandler}
             variant="standard"
           />
           <div className="btns">
-            <IconButton size="small" onClick={updateTodo}>
+            <IconButton size="small" onClick={updateTodoAndComplate}>
               <CheckIcon />
             </IconButton>
             <IconButton size="small" onClick={editModeHandler}>
@@ -108,7 +125,12 @@ const Li = styled.div`
 
   .todo {
     padding: 0;
-    word-break: ;
+    word-break: break-all;
+  }
+
+  .doneTodo {
+    color: #d9d9db;
+    text-decoration: line-through;
   }
 
   .editTodo {
