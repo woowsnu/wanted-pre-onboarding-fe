@@ -1,10 +1,8 @@
 # Todo List (원티드 프리온보딩 프론트엔드 - 선발 과제)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 과제 요구사항
 
-## 1. 과제
-
-### :: 1) 로그인 / 회원가입
+### :: 1. 로그인 / 회원가입
 - `/` 경로에 로그인 / 회원가입 기능을 개발해주세요
   - 페이지 안에 이메일 입력창, 비밀번호 입력창, 제출 버튼이 포함된 형태로 구성해주세요
   - 로그인, 회원가입을 별도의 경로로 분리해도 무방합니다.
@@ -31,7 +29,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ---
 
-### :: 2) 투두 리스트
+### :: 2. 투두 리스트
 
 #### Assignment4
 
@@ -45,41 +43,44 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   - 투두 리스트의 개별 아이템 우측에 수정버튼이 존재하고 해당 버튼을 누르면 수정모드가 활성화되고 투두 리스트의 내용을 수정할 수 있도록 해주세요
   - 수정모드에서는 개별 아이템의 우측에 제출버튼과 취소버튼이 표시되며 해당 버튼을 통해서 수정 내용을 제출하거나 수정을 취소할 수 있도록 해주세요
   - 투두 리스트의 개별 아이템 우측에 삭제버튼이 존재하고 해당 버튼을 누르면 투두 리스트가 삭제되도록 해주세요
+ 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 프로젝트 실행 방법
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    $ npm install
+    $ npm start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+-   위 순서대로 실행하면 localhost:3000 포트에 프론트엔드 서버가 실행됩니다.
+  
+## 구현화면 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## 파일트리 📁
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+📦front  
+ ┣ 📂public  
+ ┃ ┗ 📜index.html  
+ ┗ 📂src  
+ ┃ ┣ 📂apis  
+ ┃ ┃ ┣ 📜auth.js  
+ ┃ ┃ ┣ 📜index.js  
+ ┃ ┃ ┗ 📜todo.js  
+ ┃ ┣ 📂components  
+ ┃ ┃ ┣ 📂Auth  
+ ┃ ┃ ┃ ┣ 📜Login.js  
+ ┃ ┃ ┃ ┗ 📜Signup.js  
+ ┃ ┃ ┗ 📂Todo  
+ ┃ ┃ ┃ ┣ 📜AddTodo.js  
+ ┃ ┃ ┃ ┣ 📜TodoItem.js  
+ ┃ ┃ ┃ ┗ 📜TodoList.js  
+ ┃ ┣ 📜App.js  
+ ┃ ┣ 📜index.css  
+ ┃ ┗ 📜index.js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## 느낀점
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 라우팅 처리 더 공부해됨..
+- 코드가 너무 지저분함
+- 왜 기본적인 기능을 못할까...
+- 폴더 구조를 더 효율적으로 나누고 싶음
