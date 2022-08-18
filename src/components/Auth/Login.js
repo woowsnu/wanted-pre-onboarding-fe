@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginAPI } from "../../apis/auth";
 import Box from "@mui/material/Box";
@@ -11,6 +11,13 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const token = !!localStorage.getItem("access_token");
+    if (token) {
+      navigate("/todo");
+    }
+  });
 
   const emailInputHandler = (e) => {
     setEmail(e.target.value);
@@ -104,7 +111,6 @@ const Caption = styled.div`
   text-align: center;
   text-decoration: none;
   font-size: 1rem;
-
   .text {
     text-decoration: none;
     padding: 4px;

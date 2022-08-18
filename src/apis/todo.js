@@ -1,13 +1,13 @@
 import baseURL from ".";
 
-const token = localStorage.getItem("access_token")
+const token = localStorage.getItem("access_token");
 
 // Todo 추가 Api
 export const createTodoAPI = (todo) =>
   fetch(`${baseURL}/todos`, {
     method: "POST",
     headers: {
-      "Authorization": 'Bearer ' + token,
+      Authorization: "Bearer " + token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(todo),
@@ -17,8 +17,8 @@ export const createTodoAPI = (todo) =>
 export const getAllTodoAPI = async () =>
   fetch(`${baseURL}/todos`, {
     headers: {
-      "Authorization": 'Bearer ' + token,
-    }
+      Authorization: "Bearer " + token,
+    },
   });
 
 // Todo 수정 API
@@ -26,7 +26,7 @@ export const updateTodoAPI = async (newTodo, id) =>
   fetch(`${baseURL}/todos/${id}`, {
     method: "PUT",
     headers: {
-      "Authorization": 'Bearer ' + token,
+      Authorization: "Bearer " + token,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newTodo),
@@ -37,7 +37,7 @@ export const deleteTodoAPI = async (id) =>
   fetch(`${baseURL}/todos/${id}`, {
     method: "DELETE",
     headers: {
-      "Authorization": 'Bearer ' + token,
+      Authorization: "Bearer " + token,
       "Content-Type": "application/json",
     },
   });
