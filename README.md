@@ -51,9 +51,12 @@
     $ npm start
 
 -   위 순서대로 실행하면 localhost:3000 포트에 프론트엔드 서버가 실행됩니다.
+-   백엔드 서버는 아래 링크에서 파일 다운로드 후 localhost:8000 포트로 실행 후 사용하였습니다.
+https://github.com/walking-sunset/selection-task#%EB%A1%9C%EC%BB%AC-%EC%84%9C%EB%B2%84-%EA%B5%AC%EB%8F%99
   
 ## 구현화면 
 
+<img src="[wanted_todo](https://user-images.githubusercontent.com/105709187/185537479-91d05e3b-db0f-484e-ba52-12dd4483d880.gif">
 
 ## 파일트리 📁
 
@@ -80,7 +83,3 @@
 
 ## 느낀점
 
-- 라우팅 처리 더 공부해됨..
-- 코드가 너무 지저분함
-- 왜 기본적인 기능을 못할까...
-- 폴더 구조를 더 효율적으로 나누고 싶음
