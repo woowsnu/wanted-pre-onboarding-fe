@@ -56,6 +56,7 @@
 -   백엔드 서버는 아래 링크에서 파일 다운로드 후 localhost:8000 포트로 실행하여 사용하였습니다.
 -   https://github.com/walking-sunset/selection-task#%EB%A1%9C%EC%BB%AC-%EC%84%9C%EB%B2%84-%EA%B5%AC%EB%8F%99
   <br/>
+  
 ## 구현화면 
 
 <img src="https://user-images.githubusercontent.com/105709187/185537479-91d05e3b-db0f-484e-ba52-12dd4483d880.gif" />
@@ -82,6 +83,7 @@
  ┃ ┣ 📜App.js  
  ┃ ┣ 📜index.css  
  ┃ ┗ 📜index.js
+<br/>
 <br/>
 
 
