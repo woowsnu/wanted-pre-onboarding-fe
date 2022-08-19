@@ -56,7 +56,7 @@ https://github.com/walking-sunset/selection-task#%EB%A1%9C%EC%BB%AC-%EC%84%9C%EB
   
 ## 구현화면 
 
-<img src="[wanted_todo](https://user-images.githubusercontent.com/105709187/185537479-91d05e3b-db0f-484e-ba52-12dd4483d880.gif">
+<img src="https://user-images.githubusercontent.com/105709187/185537479-91d05e3b-db0f-484e-ba52-12dd4483d880.gif" />
 
 ## 파일트리 📁
 
