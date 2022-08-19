@@ -4,8 +4,10 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const AddTodo = (props) => {
+  const navigate = useNavigate();
   const [todo, setTodo] = useState("");
 
   const todoChangeHandler = (e) => {
@@ -22,6 +24,7 @@ const AddTodo = (props) => {
       }
     }).catch(error=>{console.error(error)});    
     setTodo("");
+    navigate("/todo")
   };
 
 

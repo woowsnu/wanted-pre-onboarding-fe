@@ -14,30 +14,20 @@ const Signup = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
 
-  const checkEmailValid = () => {
+  const emailInputHandler = (e) => {
+    const enteredEmail = e.target.value;
+    setEmail(enteredEmail);
     if (email.includes("@") && email.trim() !== "") {
       setIsEmailValid(true);
     }
   };
 
-  const checkPasswordValid = () => {
-    if (password.length > 7 && password.trim() !== "") {
-      setPasswordValid(true);
-    }
-  };
-
-  const emailInputHandler = (e) => {
-    setEmail(e.target.value);
-    checkEmailValid();
-    console.log(isEmailValid);
-  };
   const passwordInputHandler = (e) => {
     const enteredPassword = e.target.value;
     setPassword(enteredPassword);
     if (enteredPassword.length > 7 && enteredPassword.trim() !== "") {
       setPasswordValid(true);
     }
-    checkPasswordValid(isPasswordValid);
   };
 
   const onSubmitHandler = async (e) => {
@@ -63,12 +53,7 @@ const Signup = () => {
   return (
     <Container>
       <h1>회원가입</h1>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onSubmit={onSubmitHandler}
-      >
+      <Box component="form" noValidate autoComplete="off" onSubmit={onSubmitHandler}>
         <Stack spacing={5}>
           <TextField
             id="standard-helperText"
@@ -88,21 +73,10 @@ const Signup = () => {
             value={password}
           />
           {isEmailValid && isPasswordValid ? (
-            <Button
-              type="submit"
-              className="btn-text"
-              variant="contained"
-              size="large"
-            >
+            <Button type="submit" className="btn-text" variant="contained" size="large">
               가입하기
             </Button>
-          ) : (
-            <Button
-              className="btntext"
-              variant="contained"
-              size="large"
-              disabled
-            >
+          ) : (<Button variant="contained" size="large" disabled>
               가입하기
             </Button>
           )}
@@ -121,9 +95,5 @@ const Container = styled.div`
   padding-top: 10rem;
   @media screen and (max-width: 768px) {
     width: 80%;
-  }
-
-  .btntext {
-    font-size: 1.2rem;
   }
 `;

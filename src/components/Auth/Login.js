@@ -11,6 +11,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPasswordValid, setPasswordValid] = useState(false);
 
   useEffect(() => {
     const token = !!localStorage.getItem("access_token");
@@ -20,10 +22,18 @@ const Login = () => {
   });
 
   const emailInputHandler = (e) => {
-    setEmail(e.target.value);
+    const enteredEmail = e.target.value;
+    setEmail(enteredEmail);
+    if (email.includes("@") && email.trim() !== "") {
+      setIsEmailValid(true);
+    }
   };
   const passwordInputHandler = (e) => {
-    setPassword(e.target.value);
+    const enteredPassword = e.target.value;
+    setPassword(enteredPassword);
+    if (enteredPassword.length > 7 && enteredPassword.trim() !== "") {
+      setPasswordValid(true);
+    }
   };
 
   const onSubmitHandler = (e) => {
@@ -51,12 +61,7 @@ const Login = () => {
   return (
     <Container>
       <h1>로그인</h1>
-      <Box
-        component="form"
-        noValidate
-        autoComplete="off"
-        onSubmit={onSubmitHandler}
-      >
+      <Box component="form" noValidate autoComplete="off" onSubmit={onSubmitHandler}>
         <Stack spacing={5}>
           <TextField
             id="standard-helperText"
@@ -75,18 +80,14 @@ const Login = () => {
             onChange={passwordInputHandler}
             value={password}
           />
-          <Button type="submit" variant="contained" size="large">
-            로그인
-          </Button>
+          {isEmailValid && isPasswordValid ? (
+            <Button type="submit" variant="contained" size="large">로그인</Button>
+          ) : (<Button variant="contained" size="large" disabled> 로그인</Button>
+          )}
           <Caption>
             <span className="text">계정이 없으신가요?</span>
             <span className="text">
-              <Link
-                to="/signup"
-                style={{ textDecoration: "none", color: "blue" }}
-              >
-                회원가입
-              </Link>
+              <Link to="/signup" style={{ textDecoration: "none", color: "blue" }}>회원가입</Link>
             </span>
           </Caption>
         </Stack>
