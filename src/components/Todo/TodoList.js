@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { getAllTodoAPI } from "../../apis/todo";
 import AddTodo from "./AddTodo";
 import TodoItem from "./TodoItem";
@@ -20,26 +21,19 @@ const TodoList = () => {
 
   useEffect(() => {
     const fetchTodo = async () => {
-      const token = localStorage.getItem("access_token");
-      const response = await fetch("http://localhost:8000/todos", {
+      try {
+        const token = localStorage.getItem("access_token");
+        const response = await axios.get("http://localhost:8000/todos", {
         headers: {
           "Authorization": "Bearer " + token,
         },
       })
-      const responseData = await response.json();
-      
-      const loadTodos = [];
-
-      for (const key in responseData) {
-        loadTodos.push({
-          key:key, 
-          id: responseData[key].id,
-          todo: responseData[key].todo,
-          isCompleted: responseData[key].isCompleted,
-          userId: responseData[key].userId
-        })
+      console.log(response.data)
+      setTodos(response.data)
+        // const responseData = await response.json();
+      } catch(err) {
+        console.log(err)
       }
-      setTodos(loadTodos)
     };
 
     fetchTodo();

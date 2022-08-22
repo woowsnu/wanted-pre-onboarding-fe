@@ -45,17 +45,17 @@ const Login = () => {
     };
 
     loginAPI(user)
-      .then(async (response) => {
-        if (response.ok) {
-          const res = await response.json();
-          localStorage.setItem("access_token", res.access_token);
-          navigate("/todo", { replace: true });
-        }
-      })
-      .catch((error) => {
-        console.error("로그인 실패", error);
-      });
-    setEmail("");
+    .then(async (response) => {
+      if (response.ok) {
+        const res = await response.json();
+        localStorage.setItem("access_token", res.access_token);
+        navigate("/todo", { replace: true });
+      }
+    })
+    .catch((error) => {
+      console.error("로그인 실패", error);
+    });
+  setEmail("");
   };
 
   return (
