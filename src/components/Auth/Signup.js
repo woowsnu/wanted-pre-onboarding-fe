@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupAPI } from "../../apis/auth";
+import { instance } from "../../apis/authInstance";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -38,14 +38,26 @@ const Signup = () => {
       password,
     };
 
-    signupAPI(user)
+    try {
+      await instance.post("/signup", JSON.stringify(user));
+    } catch (error) {
+      console.log(error.message);
+    }
+    alert(
+      "회원가입이 완료되었습니다. 확인 클릭 시 로그인 페이지로 이동합니다."
+    );
     navigate("/");
   };
 
   return (
     <Container>
       <h1>회원가입</h1>
-      <Box component="form" noValidate autoComplete="off" onSubmit={onSubmitHandler}>
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        onSubmit={onSubmitHandler}
+      >
         <Stack spacing={5}>
           <TextField
             id="standard-helperText"
@@ -65,10 +77,16 @@ const Signup = () => {
             value={password}
           />
           {isEmailValid && isPasswordValid ? (
-            <Button type="submit" className="btn-text" variant="contained" size="large">
+            <Button
+              type="submit"
+              className="btn-text"
+              variant="contained"
+              size="large"
+            >
               가입하기
             </Button>
-          ) : (<Button variant="contained" size="large" disabled>
+          ) : (
+            <Button variant="contained" size="large" disabled>
               가입하기
             </Button>
           )}

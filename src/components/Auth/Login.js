@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginAPI } from "../../apis/auth";
+import { instance } from "../../apis/authInstance";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -29,7 +29,7 @@ const Login = () => {
     }
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -37,24 +37,26 @@ const Login = () => {
       password,
     };
 
-    loginAPI(user)
-    .then(async (response) => {
-      if (response.ok) {
-        const res = await response.json();
-        localStorage.setItem("access_token", res.access_token);
-        navigate("/todo", { replace: true });
+    try {
+      const response = await instance.post("/signin", JSON.stringify(user));
+      if (response.status === 200) {
+        localStorage.setItem("access_token", response.data.access_token);
+        navigate("/todo");
       }
-    })
-    .catch((error) => {
-      console.error("로그인 실패", error);
-    });
-  setEmail("");
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
     <Container>
       <h1>로그인</h1>
-      <Box component="form" noValidate autoComplete="off" onSubmit={onSubmitHandler}>
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        onSubmit={onSubmitHandler}
+      >
         <Stack spacing={5}>
           <TextField
             id="standard-helperText"
@@ -74,13 +76,24 @@ const Login = () => {
             value={password}
           />
           {isEmailValid && isPasswordValid ? (
-            <Button type="submit" variant="contained" size="large">로그인</Button>
-          ) : (<Button variant="contained" size="large" disabled> 로그인</Button>
+            <Button type="submit" variant="contained" size="large">
+              로그인
+            </Button>
+          ) : (
+            <Button variant="contained" size="large" disabled>
+              {" "}
+              로그인
+            </Button>
           )}
           <Caption>
             <span className="text">계정이 없으신가요?</span>
             <span className="text">
-              <Link to="/signup" style={{ textDecoration: "none", color: "blue" }}>회원가입</Link>
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "blue" }}
+              >
+                회원가입
+              </Link>
             </span>
           </Caption>
         </Stack>
