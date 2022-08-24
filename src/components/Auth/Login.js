@@ -14,13 +14,6 @@ const Login = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(false);
 
-  useEffect(() => {
-    const token = !!localStorage.getItem("access_token");
-    if (token) {
-      navigate("/todo");
-    }
-  });
-
   const emailInputHandler = (e) => {
     const enteredEmail = e.target.value;
     setEmail(enteredEmail);

@@ -13,13 +13,6 @@ const TodoList = () => {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    const token = !!localStorage.getItem("access_token");
-    if (!token) {
-      navigate("/");
-    }
-  });
-
-  useEffect(() => {
     const fetchTodo = async () => {
       try {
         const token = localStorage.getItem("access_token");
@@ -30,7 +23,6 @@ const TodoList = () => {
       })
       console.log(response.data)
       setTodos(response.data)
-        // const responseData = await response.json();
       } catch(err) {
         console.log(err)
       }
