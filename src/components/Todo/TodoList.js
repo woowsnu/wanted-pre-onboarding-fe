@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { getAllTodoAPI } from "../../apis/todo";
+import { instance } from "../../apis/todoInstance";
 import AddTodo from "./AddTodo";
 import TodoItem from "./TodoItem";
 import styled from "styled-components";
@@ -15,31 +14,24 @@ const TodoList = () => {
   useEffect(() => {
     const fetchTodo = async () => {
       try {
-        const token = localStorage.getItem("access_token");
-        const response = await axios.get("http://localhost:8000/todos", {
-        headers: {
-          "Authorization": "Bearer " + token,
-        },
-      })
-      console.log(response.data)
-      setTodos(response.data)
+        const response = await instance.get("");
+        setTodos(response.data);
       } catch(err) {
         console.log(err)
       }
     };
-
     fetchTodo();
   }, []);
 
   const renderTodos = async () => {
-    await getAllTodoAPI()
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setTodos(data);
-      });
+    try {
+      const response = await instance.get("");
+      setTodos(response.data);
+    } catch (error) {
+      console.log(error)
+    }
   };
+
 
   const deleteToken = () => {
     localStorage.removeItem("access_token");

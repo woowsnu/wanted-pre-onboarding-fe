@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { updateTodoAPI, deleteTodoAPI } from "../../apis/todo";
+import { instance } from "../../apis/todoInstance";
+import styled from "styled-components";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TextField from "@mui/material/TextField";
@@ -7,7 +8,6 @@ import Checkbox from "@mui/material/Checkbox";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import styled from "styled-components";
 
 const TodoItem = (props) => {
   const [todo, setTodo] = useState(props.todo);
@@ -19,20 +19,7 @@ const TodoItem = (props) => {
     setEditedTodo(e.target.value);
   };
 
-  const updateIsComplated = () => {
-    
-    const newTodo = {
-      todo: todo,
-      isCompleted: !isCompleted,
-    };
-    updateTodoAPI(newTodo, props.id).then((responese) => {
-      if (responese.ok) {
-        setIsCompleted(!isCompleted)
-      }
-    });
-  }    
-   
-
+  // 수정모드 on/off
   const editModeHandler = () => {
     setEditMode(!editMode);
     if (todo !== editedTodo) {
@@ -40,25 +27,43 @@ const TodoItem = (props) => {
     }
   };
 
-  const updateTodoAndComplate = () => {
+  // isCompleted(checkbox) 변경
+  const updateIsComplated = async () => {
     const newTodo = {
-      todo: editedTodo,
-      isCompleted
+      todo: todo,
+      isCompleted: !isCompleted,
     };
-    updateTodoAPI(newTodo, props.id).then((responese) => {
-      if (responese.ok) {
-        setEditMode(false);
-        setTodo(editedTodo);
-      }
-    });
+    try {
+      await instance.put(`/${props.id}`, JSON.stringify(newTodo));
+      setIsCompleted(!isCompleted);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const deleteTodo = () => {
-    deleteTodoAPI(props.id).then((response) => {
-      if (response.ok) {
-        props.renderTodos();
-      }
-    });
+  // 수정된 todo 업데이트
+  const updateEditedTodo = async () => {
+    const newTodo = {
+      todo: editedTodo,
+      isCompleted,
+    };
+    try {
+      await instance.put(`/${props.id}`, JSON.stringify(newTodo));
+      setEditMode(false);
+      setTodo(editedTodo);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // todo 삭제
+  const deleteTodo = async () => {
+    try {
+      await instance.delete(`${props.id}`);
+      props.renderTodos();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const doneTodo = isCompleted ? "doneTodo" : "todo";
@@ -85,10 +90,7 @@ const TodoItem = (props) => {
         </Li>
       ) : (
         <Li>
-          <Checkbox
-            checked={isCompleted}
-            color="default"
-          />
+          <Checkbox checked={isCompleted} color="default" />
           <TextField
             className="editTodo"
             fullWidth
@@ -97,7 +99,7 @@ const TodoItem = (props) => {
             variant="standard"
           />
           <div className="btns">
-            <IconButton size="small" onClick={updateTodoAndComplate}>
+            <IconButton size="small" onClick={updateEditedTodo}>
               <CheckIcon />
             </IconButton>
             <IconButton size="small" onClick={editModeHandler}>

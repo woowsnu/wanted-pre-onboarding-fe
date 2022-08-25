@@ -1,32 +1,31 @@
 import React, { useState } from "react";
-import { createTodoAPI } from "../../apis/todo";
+import { instance } from "../../apis/todoInstance";
+import styled from "styled-components";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 
 const AddTodo = (props) => {
-  const navigate = useNavigate();
   const [todo, setTodo] = useState("");
 
   const todoChangeHandler = (e) => {
     setTodo(e.target.value);
   };
 
-  const addTodo = () => {
+  const addTodo = async () => {
     const data = {
       todo,
     };
-    createTodoAPI(data).then((response) => {
-      if(response.ok) {
+    try {
+      const response = await instance.post("", JSON.stringify(data));
+      if (response.status === 201) {
         props.renderTodos();
       }
-    }).catch(error=>{console.error(error)});    
+    } catch (error) {
+      console.log(error)
+    }
     setTodo("");
-    navigate("/todo")
   };
-
 
   return (
     <Container>
@@ -37,7 +36,7 @@ const AddTodo = (props) => {
         variant="standard"
         placeholder=" 할 일을 입력하세요."
       />
-      <IconButton onClick={addTodo} color="primary" >
+      <IconButton onClick={addTodo} color="primary">
         <AddCircleIcon />
       </IconButton>
     </Container>
