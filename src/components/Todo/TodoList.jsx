@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { instance } from "../../apis/todoInstance";
-import AddTodo from "./AddTodo";
-import TodoItem from "./TodoItem";
+import AddTodo from "./AddTodo.tsx";
+import TodoItem from "./TodoItem.tsx";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -26,6 +26,7 @@ const TodoList = () => {
   const renderTodos = async () => {
     try {
       const response = await instance.get("");
+      console.log(response.data)
       setTodos(response.data);
     } catch (error) {
       console.log(error)

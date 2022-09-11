@@ -9,10 +9,17 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
-const TodoItem = (props) => {
-  const [todo, setTodo] = useState(props.todo);
-  const [editedTodo, setEditedTodo] = useState(props.todo);
-  const [isCompleted, setIsCompleted] = useState(props.isCompleted);
+interface IProps {
+  id: number;
+  isCompleted: boolean;
+  todo: string[];
+  renderTodos: any;
+}
+
+const TodoItem = ({id, isCompleted, todo, renderTodos} : IProps) => {
+  const [todoItem, setTodoItem] = useState(todo);
+  const [editedTodo, setEditedTodo] = useState(todo);
+  const [isCompletedItem, setIsCompletedItem] = useState(isCompleted);
   const [editMode, setEditMode] = useState(false);
 
   const todoChangeHandler = (e) => {
@@ -22,20 +29,20 @@ const TodoItem = (props) => {
   // 수정모드 on/off
   const editModeHandler = () => {
     setEditMode(!editMode);
-    if (todo !== editedTodo) {
-      setEditedTodo(todo);
+    if (todoItem !== editedTodo) {
+      setEditedTodo(todoItem);
     }
   };
 
   // isCompleted(checkbox) 변경
   const updateIsComplated = async () => {
     const newTodo = {
-      todo: todo,
-      isCompleted: !isCompleted,
+      todo: todoItem,
+      isCompleted: !isCompletedItem,
     };
     try {
-      await instance.put(`/${props.id}`, JSON.stringify(newTodo));
-      setIsCompleted(!isCompleted);
+      await instance.put(`/${id}`, JSON.stringify(newTodo));
+      setIsCompletedItem(!isCompletedItem);
     } catch (error) {
       console.log(error);
     }
@@ -48,9 +55,9 @@ const TodoItem = (props) => {
       isCompleted,
     };
     try {
-      await instance.put(`/${props.id}`, JSON.stringify(newTodo));
+      await instance.put(`/${id}`, JSON.stringify(newTodo));
       setEditMode(false);
-      setTodo(editedTodo);
+      setTodoItem(editedTodo);
     } catch (error) {
       console.log(error);
     }
@@ -59,8 +66,8 @@ const TodoItem = (props) => {
   // todo 삭제
   const deleteTodo = async () => {
     try {
-      await instance.delete(`${props.id}`);
-      props.renderTodos();
+      await instance.delete(`${id}`);
+      renderTodos();
     } catch (error) {
       console.log(error);
     }
@@ -73,12 +80,12 @@ const TodoItem = (props) => {
       {!editMode ? (
         <Li>
           <Checkbox
-            checked={isCompleted}
+            checked={isCompletedItem}
             color="default"
             onChange={updateIsComplated}
-            value={isCompleted}
+            value={isCompletedItem}
           />
-          <p className={doneTodo}>{todo}</p>
+          <p className={doneTodo}>{todoItem}</p>
           <div className="btns">
             <IconButton onClick={editModeHandler}>
               <EditRoundedIcon />
@@ -90,7 +97,7 @@ const TodoItem = (props) => {
         </Li>
       ) : (
         <Li>
-          <Checkbox checked={isCompleted} color="default" />
+          <Checkbox checked={isCompletedItem} color="default" />
           <TextField
             className="editTodo"
             fullWidth

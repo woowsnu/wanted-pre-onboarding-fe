@@ -5,7 +5,11 @@ import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
-const AddTodo = (props) => {
+interface Iprops {
+  renderTodos: any;
+}
+
+const AddTodo = ({renderTodos} : Iprops) => {
   const [todo, setTodo] = useState("");
 
   const todoChangeHandler = (e) => {
@@ -19,7 +23,7 @@ const AddTodo = (props) => {
     try {
       const response = await instance.post("", JSON.stringify(data));
       if (response.status === 201) {
-        props.renderTodos();
+        renderTodos();
       }
     } catch (error) {
       console.log(error)
